@@ -1,0 +1,19 @@
+# Using 'ubuntu' as the base image here
+FROM ubuntu
+
+# setting the working directory
+WORKDIR /opt/aem
+
+#cloud service SDK
+COPY aemcloud.jar aemcloud.jar
+
+# Install Java
+RUN apt-get update && \
+    apt-get install -y curl && \
+    apt-get install -y software-properties-common && \
+    add-apt-repository ppa:openjdk-r/ppa && \
+    apt-get update && \
+    apt-get install -y openjdk-11-jdk
+
+# Unack the Jar file
+RUN java -jar aemcloud.jar -unpack
